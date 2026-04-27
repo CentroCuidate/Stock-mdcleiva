@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0D0F0C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Reservar cita · MDC Leiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#2ECC8E;--green-dark:#1BA370;
+  --green-light:rgba(46,204,142,.12);--green-glow:rgba(46,204,142,.22);
+  --gold:#C9952A;--gold-dark:#8A6010;--gold-light:rgba(201,149,42,.12);
+  --bg:#07100A;--surface:#101B12;--surface2:#172019;--surface3:#1D2A1F;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);
+  --text:#EAF6F0;--text2:rgba(234,246,240,.55);--text3:rgba(234,246,240,.28);
+  --red:#E8402A;--blue:#4A9EF5;
+  --r:14px;--r-lg:20px;--r-xl:28px;--r-pill:100px;
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --accent:var(--green);--accent-dark:var(--green-dark);
+  --accent-light:var(--green-light);--accent-glow:var(--green-glow);
+}
+html{background:var(--bg);min-height:100vh;overscroll-behavior:none}
+body{
+  font-family:'Nunito',sans-serif;color:var(--text);background:var(--bg);
+  min-height:100dvh;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(40px + var(--safe-b));
+  overflow-x:hidden;
+}
+
+/* ═══════════════════════════════
+   HEADER
+═══════════════════════════════ */
+.bk-hdr{
+  position:sticky;top:0;z-index:50;
+  padding:calc(var(--safe-t) + 12px) 20px 14px;
+  display:flex;align-items:center;gap:13px;
+  background:rgba(7,16,10,.88);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border-bottom:1px solid rgba(46,204,142,.08);
+}
+.bk-logo{
+  width:40px;height:40px;border-radius:12px;
+  object-fit:cover;flex-shrink:0;
+  background:rgba(46,204,142,.08);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  border:1px solid rgba(46,204,142,.18);
+}
+.bk-hdr-name{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.3px;font-family:'Playfair Display',serif}
+.bk-hdr-sub{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.05em;margin-top:2px}
+.bk-online{
+  margin-left:auto;padding:5px 13px;border-radius:var(--r-pill);
+  background:rgba(46,204,142,.1);border:1px solid rgba(46,204,142,.25);
+  font-size:10px;font-weight:800;color:var(--green);letter-spacing:.1em;
+  text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:5px
+}
+.bk-online::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ═══════════════════════════════
+   HERO STRIP — under header
+═══════════════════════════════ */
+.bk-hero-strip{
+  background:linear-gradient(135deg,rgba(46,204,142,.08) 0%,rgba(46,204,142,.03) 60%,transparent 100%);
+  border-bottom:1px solid rgba(46,204,142,.07);
+  padding:18px 22px 16px;
+  display:flex;align-items:center;gap:14px;
+}
+.bk-hero-strip.mc{
+  background:linear-gradient(135deg,rgba(201,149,42,.08) 0%,rgba(201,149,42,.03) 60%,transparent 100%);
+  border-bottom:1px solid rgba(201,149,42,.07);
+}
+.bk-hero-icon{font-size:32px;line-height:1}
+.bk-hero-text{}
+.bk-hero-svc{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+.bk-hero-meta{font-size:11px;font-weight:600;color:var(--text3);margin-top:3px;display:flex;align-items:center;gap:8px}
+.bk-hero-dot{width:3px;height:3px;border-radius:50%;background:var(--text3)}
+
+/* ═══════════════════════════════
+   STEP INDICATOR
+═══════════════════════════════ */
+.steps-wrap{
+  padding:16px 20px 0;
+  display:flex;align-items:center;gap:0;
+  margin-bottom:2px;
+}
+.step-item{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;color:var(--text3);transition:color .25s;flex-shrink:0}
+.step-item.active{color:var(--accent)}
+.step-item.done{color:var(--accent)}
+.step-num{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;flex-shrink:0;transition:all .25s;
+}
+.step-item.active .step-num{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 0 3px rgba(46,204,142,.2)}
+.step-item.done .step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.step-bar{flex:1;height:2px;background:var(--border);margin:0 6px;border-radius:2px;transition:background .4s}
+.step-bar.done{background:var(--accent)}
+
+/* ═══════════════════════════════
+   CONTENT
+═══════════════════════════════ */
+.bk-body{padding:22px 20px;max-width:520px;margin:0 auto}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.4px;margin-bottom:6px;line-height:1.2}
+.sec-sub{font-size:13px;color:var(--text2);font-weight:500;line-height:1.7;margin-bottom:22px}
+
+/* ═══════════════════════════════
+   CENTER CARDS
+═══════════════════════════════ */
+.center-card{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 18px;border-radius:var(--r-xl);
+  border:1.5px solid var(--border);background:var(--surface);
+  cursor:pointer;transition:all .22s;position:relative;overflow:hidden;
+  margin-bottom:14px;-webkit-tap-highlight-color:transparent;
+}
+.center-card::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.center-card:active{transform:scale(.98)}
+.center-card.cc{border-color:rgba(46,204,142,.2);box-shadow:0 4px 24px rgba(46,204,142,.06)}
+.center-card.mc{border-color:rgba(201,149,42,.2);box-shadow:0 4px 24px rgba(201,149,42,.06)}
+.center-card.cc:hover{border-color:rgba(46,204,142,.4);box-shadow:0 8px 32px rgba(46,204,142,.12)}
+.center-card.mc:hover{border-color:rgba(201,149,42,.4);box-shadow:0 8px 32px rgba(201,149,42,.12)}
+.cc-logo-wrap{
+  width:68px;height:68px;border-radius:18px;overflow:hidden;flex-shrink:0;
+  background:var(--surface2);display:flex;align-items:center;justify-content:center;
+  font-size:30px;border:1px solid rgba(255,255,255,.06);
+}
+.cc-logo-img{width:100%;height:100%;object-fit:cover}
+.center-name{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.2px;margin-bottom:4px;font-family:'Playfair Display',serif}
+.center-addr{font-size:11.5px;font-weight:500;color:var(--text3);line-height:1.65}
+.center-badge{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:20px;margin-top:6px;letter-spacing:.04em}
+.center-badge.cc{background:rgba(46,204,142,.12);color:var(--green)}
+.center-badge.mc{background:rgba(201,149,42,.12);color:var(--gold)}
+.center-arrow{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;margin-left:auto;flex-shrink:0;transition:transform .2s}
+.center-card:hover .center-arrow,.center-card:active .center-arrow{transform:translateX(4px)}
+.cc .center-arrow{background:rgba(46,204,142,.14);color:var(--green)}
+.mc .center-arrow{background:rgba(201,149,42,.14);color:var(--gold)}
+
+/* ═══════════════════════════════
+   SERVICE CARDS
+═══════════════════════════════ */
+.svc-card{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 16px;border-radius:var(--r-lg);
+  border:1.5px solid var(--border);background:var(--surface2);
+  cursor:pointer;transition:all .18s;margin-bottom:10px;
+  -webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;
+}
+.svc-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border2);border-radius:0;transition:background .2s}
+.svc-card:active{transform:scale(.98)}
+.svc-card.selected{border-color:var(--accent);background:rgba(46,204,142,.06)}
+.svc-card.selected::before{background:var(--accent)}
+.svc-card.popular{border-color:rgba(201,149,42,.25)}
+.svc-icon{
+  width:46px;height:46px;border-radius:13px;
+  background:var(--surface3);display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0;
+  border:1px solid var(--border);
+}
+.svc-info{flex:1;min-width:0}
+.svc-name{font-size:14.5px;font-weight:800;color:var(--text);line-height:1.2}
+.svc-dur{font-size:11px;font-weight:600;color:var(--text3);margin-top:3px;display:flex;align-items:center;gap:6px}
+.svc-tag{font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;background:rgba(201,149,42,.15);color:var(--gold);letter-spacing:.04em}
+.svc-price{font-size:14px;font-weight:900;color:var(--accent);flex-shrink:0;margin-right:10px}
+.svc-price.free{color:var(--text3);font-size:11px;font-weight:600}
+.svc-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;transition:all .18s}
+.svc-card.selected .svc-check{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ═══════════════════════════════
+   CALENDAR
+═══════════════════════════════ */
+.cal-card{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:var(--r-xl);padding:20px 16px;
+  box-shadow:0 8px 40px rgba(0,0,0,.25);
+}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-btn{
+  width:42px;height:42px;border-radius:50%;
+  border:1.5px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:inherit;transition:all .15s;
+}
+.cal-btn:active{transform:scale(.9);background:var(--surface3)}
+.cal-month-lbl{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:0}
+.cal-dow{text-align:center;font-size:9px;font-weight:800;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:6px 0 4px}
+.cal-day{
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;
+  transition:all .18s;position:relative;
+  border:2px solid transparent;
+  -webkit-tap-highlight-color:transparent;
+  gap:1px;
+}
+.cal-day.empty{cursor:default;background:transparent}
+.cal-day.past{color:var(--text3);cursor:not-allowed;opacity:.3}
+.cal-day.closed{color:var(--text3);cursor:not-allowed;opacity:.25}
+.cal-day.avail{
+  color:var(--text);
+  background:var(--surface2);
+}
+.cal-day.avail:hover{
+  background:rgba(46,204,142,.1);
+  border-color:rgba(46,204,142,.25);
+  color:var(--green);
+}
+.cal-day.sel{
+  background:var(--accent)!important;
+  color:#0A1A0E!important;
+  border-color:transparent!important;
+  font-weight:900!important;
+  box-shadow:0 0 0 4px rgba(46,204,142,.2),0 6px 20px rgba(46,204,142,.3)!important;
+  transform:scale(1.08)!important;
+}
+.cal-day.today-ring{
+  border-color:rgba(255,255,255,.18);
+}
+.cal-day.today-ring.avail:not(.sel){
+  font-weight:800;color:var(--accent);
+}
+.avail-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--accent);opacity:.5;
+  flex-shrink:0;
+}
+.cal-day.sel .avail-dot{background:rgba(10,26,14,.5);opacity:.7}
+
+/* ═══════════════════════════════
+   SLOTS
+═══════════════════════════════ */
+.slots-wrap{margin-top:20px}
+.slots-section{margin-bottom:10px}
+.slots-period-lbl{
+  font-size:10px;font-weight:800;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.13em;
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:10px;
+}
+.slots-period-lbl::after{content:"";flex:1;height:1px;background:var(--border)}
+.slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.slot-btn{
+  padding:12px 6px;border-radius:12px;
+  border:1.5px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-size:13px;font-weight:700;
+  text-align:center;cursor:pointer;transition:all .15s;
+  font-family:inherit;-webkit-tap-highlight-color:transparent;
+  line-height:1;
+}
+.slot-btn:hover{border-color:rgba(46,204,142,.3);color:var(--green);background:rgba(46,204,142,.06)}
+.slot-btn:active{transform:scale(.93)}
+.slot-btn.taken{
+  color:var(--text3);background:var(--surface);border-color:var(--border);
+  cursor:not-allowed;text-decoration:line-through;opacity:.35;font-size:11px;
+}
+.slot-btn.sel{
+  background:var(--accent);border-color:var(--accent);
+  color:#0A1A0E;font-weight:800;
+  box-shadow:0 4px 16px var(--accent-glow),0 0 0 3px rgba(46,204,142,.15);
+  transform:scale(1.04);
+}
+.no-slots{
+  text-align:center;padding:24px;color:var(--text3);font-size:13px;font-weight:600;
+  background:var(--surface2);border-radius:var(--r);border:1px solid var(--border);
+  line-height:1.6;
+}
+
+/* ═══════════════════════════════
+   SELECTED DATE SUMMARY
+═══════════════════════════════ */
+.date-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(46,204,142,.1);border:1px solid rgba(46,204,142,.2);
+  border-radius:var(--r-pill);padding:6px 14px;
+  font-size:13px;font-weight:700;color:var(--green);
+  margin-bottom:16px;
+}
+
+/* ═══════════════════════════════
+   FORM
+═══════════════════════════════ */
+.bk-lbl{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.13em;display:block;margin-bottom:8px}
+.bk-inp{
+  width:100%;padding:15px 16px;border:1.5px solid var(--border2);
+  border-radius:var(--r);background:var(--surface2);color:var(--text);
+  font-size:16px;font-family:'Nunito',inherit;font-weight:600;
+  -webkit-appearance:none;outline:none;transition:border-color .2s;
+  caret-color:var(--accent);
+}
+.bk-inp:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(46,204,142,.1)}
+.bk-inp::placeholder{color:var(--text3);font-weight:500}
+.bk-field{margin-bottom:18px}
+
+/* ═══════════════════════════════
+   SUMMARY
+═══════════════════════════════ */
+.summary-box{
+  background:var(--surface2);border:1.5px solid var(--border2);
+  border-radius:var(--r-xl);overflow:hidden;margin-bottom:22px;
+  box-shadow:0 4px 24px rgba(0,0,0,.2);
+}
+.summary-header{
+  padding:16px 18px;border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(46,204,142,.06),transparent);
+}
+.summary-sede-name{font-size:16px;font-weight:800;color:var(--text);font-family:'Playfair Display',serif;margin-bottom:3px}
+.summary-sede-addr{font-size:11px;color:var(--text3);font-weight:500}
+.summary-rows{padding:4px 0}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;border-bottom:1px solid var(--border)}
+.sum-row:last-child{border-bottom:none}
+.sum-lbl{font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.sum-val{font-size:13.5px;font-weight:800;color:var(--text)}
+
+/* ═══════════════════════════════
+   BUTTONS
+═══════════════════════════════ */
+.bk-btn{
+  width:100%;padding:17px;border-radius:var(--r);border:none;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);
+  color:#fff;font-size:15px;font-weight:800;font-family:'Nunito',inherit;
+  cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 10px 28px rgba(46,204,142,.25),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.bk-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent)}
+.bk-btn:active{transform:scale(.97);box-shadow:0 4px 12px rgba(46,204,142,.2)}
+.bk-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.bk-btn-ghost{
+  width:100%;padding:13px;border-radius:var(--r);
+  border:1.5px solid var(--border2);background:var(--surface2);
+  color:var(--text2);font-size:13px;font-weight:700;
+  font-family:'Nunito',inherit;cursor:pointer;transition:all .15s;margin-top:10px;
+}
+.bk-btn-ghost:active{background:var(--surface3)}
+.bk-btn-map{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;padding:14px;border-radius:var(--r);
+  border:1.5px solid rgba(74,158,245,.25);
+  background:rgba(74,158,245,.07);color:#7AB8FF;font-size:14px;font-weight:700;
+  font-family:'Nunito',inherit;cursor:pointer;text-decoration:none;transition:all .15s;
+}
+.bk-btn-map:active{background:rgba(74,158,245,.15)}
+
+/* ═══════════════════════════════
+   TRUST BADGES
+═══════════════════════════════ */
+.trust-row{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  padding:14px 0;margin-top:8px;
+  border-top:1px solid var(--border);
+}
+.trust-item{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--text3)}
+
+/* ═══════════════════════════════
+   ERROR & SUCCESS
+═══════════════════════════════ */
+.bk-error{
+  background:rgba(232,64,42,.1);border:1.5px solid rgba(232,64,42,.22);
+  border-radius:var(--r);padding:12px 15px;font-size:12.5px;font-weight:700;
+  color:#FF8070;display:none;margin-bottom:14px;
+}
+.bk-error.show{display:block}
+.success-wrap{
+  min-height:60vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:36px 24px;
+}
+.success-ring{
+  width:96px;height:96px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  display:flex;align-items:center;justify-content:center;font-size:42px;
+  margin:0 auto 28px;
+  box-shadow:0 0 0 16px rgba(46,204,142,.12),0 20px 60px rgba(46,204,142,.25);
+  animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;letter-spacing:-.4px;margin-bottom:12px}
+.success-sub{font-size:14px;color:var(--text2);font-weight:500;line-height:1.8;max-width:320px;margin:0 auto 32px}
+
+/* ═══════════════════════════════
+   ADDRESS CARD
+═══════════════════════════════ */
+.addr-card{
+  background:var(--surface2);border:1.5px solid var(--border2);
+  border-radius:var(--r-lg);padding:20px;text-align:left;
+  margin-bottom:16px;width:100%;max-width:360px;
+}
+.addr-sede-name{font-size:16px;font-weight:800;color:var(--text);font-family:'Playfair Display',serif;margin-bottom:8px}
+.addr-line{font-size:13px;color:var(--text2);font-weight:500;line-height:1.8;display:flex;align-items:flex-start;gap:9px;margin-bottom:4px}
+.addr-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+
+/* ═══════════════════════════════
+   LOADER
+═══════════════════════════════ */
+.loading-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:40vh;gap:16px;
+}
+.spinner{
+  width:40px;height:40px;border:3px solid var(--border2);
+  border-top-color:var(--accent);border-radius:50%;animation:spin .75s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-lbl{font-size:13px;font-weight:600;color:var(--text3)}
+
+/* ═══════════════════════════════
+   NOTICE
+═══════════════════════════════ */
+.bk-notice{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 15px;font-size:11.5px;font-weight:600;
+  color:var(--text3);line-height:1.7;margin-top:16px;
+}
+
+/* ═══════════════════════════════
+   ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fade-up{animation:fadeUp .35s cubic-bezier(.22,1,.36,1) both}
+
+/* ═══════════════════════════════
+   DESKTOP
+═══════════════════════════════ */
+@media(min-width:700px){
+  body{padding-bottom:60px}
+  .bk-body{padding:28px 28px}
+  .slots-grid{grid-template-columns:repeat(5,1fr)}
+  .bk-hdr{padding:calc(var(--safe-t) + 14px) 32px 16px}
+  .steps-wrap{padding:18px 28px 0}
+}
+@media(min-width:1000px){
+  body{background:linear-gradient(135deg,#07100A 0%,#091408 50%,#07100A 100%)}
+  .bk-body{max-width:580px;padding:32px 40px}
+  .sec-title{font-size:28px}
+  .center-card{padding:24px 22px}
+  .cal-card{padding:24px 20px}
+  .slot-btn{padding:14px 8px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="bk-hdr">
+  <div class="bk-logo" id="hdrLogo">✦</div>
+  <div>
+    <div class="bk-hdr-name">MDC Leiva</div>
+    <div class="bk-hdr-sub">Reserva tu cita online</div>
+  </div>
+  <div class="bk-online">Online</div>
+</div>
+
+<!-- STEPS BAR -->
+<div class="steps-wrap" id="stepsWrap">
+  <div class="step-item active" id="si0"><div class="step-num" id="sn0">1</div><span>Centro</span></div>
+  <div class="step-bar" id="sb0"></div>
+  <div class="step-item" id="si1"><div class="step-num" id="sn1">2</div><span>Servicio</span></div>
+  <div class="step-bar" id="sb1"></div>
+  <div class="step-item" id="si2"><div class="step-num" id="sn2">3</div><span>Fecha</span></div>
+  <div class="step-bar" id="sb2"></div>
+  <div class="step-item" id="si3"><div class="step-num" id="sn3">4</div><span>Datos</span></div>
+</div>
+
+<!-- MAIN -->
+<div id="bkMain">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <div class="loading-lbl">Cargando disponibilidad…</div>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+
+/* ─── FIREBASE ─── */
+var FB={
+  apiKey:"AIzaSyDyd65tOvgS52SW7bruAZDdxU3tfOX8Fek",
+  authDomain:"centrocuidatecoin.firebaseapp.com",
+  databaseURL:"https://centrocuidatecoin-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"centrocuidatecoin"
+};
+
+/* ─── CENTER DATA ─── */
+var CENTERS={
+  cc:{
+    id:'cc', emoji:'🌿',
+    name:'Centro Cuídate',
+    sub:'Bienestar Integral · Coin',
+    address:'Calle Arquímedes 32, Oficina 9',
+    city:'29100 Coín, Málaga',
+    mapsUrl:'https://maps.google.com/?q=Calle+Arquimedes+32+Oficina+9+29100+Coin+Malaga',
+    color:'#2ECC8E', colorRgb:'46,204,142',
+    accent:'--green',
+  },
+  mc:{
+    id:'mc', emoji:'✨',
+    name:'M&C Estética Avanzada',
+    sub:'Estética Avanzada · Cártama',
+    address:'Calle José Martín Ruiz 14',
+    city:'29580 Estación de Cártama, Málaga',
+    mapsUrl:'https://maps.google.com/?q=Calle+Jose+Martin+Ruiz+14+29580+Estacion+de+Cartama+Malaga',
+    color:'#C9952A', colorRgb:'201,149,42',
+    accent:'--gold',
+  }
+};
+
+/* ─── SERVICES PER CENTER ─── */
+var SERVICES_CC=[
+  {
+    id:'consulta_preso',
+    name:'Consulta Nutricional & Presoterapia',
+    badge:'🎁 Primera sesión gratuita',
+    icon:'✨',
+    dur:30,
+    prepBefore:0, prepAfter:0,
+    desc:'Empieza tu cambio con una evaluación nutricional personalizada combinada con una sesión de presoterapia. Sin compromiso y sin coste.'
+  },
+  {
+    id:'skincare',
+    name:'Skin Care Personalizado',
+    badge:'',
+    icon:'🌿',
+    dur:30,
+    prepBefore:0, prepAfter:0,
+    desc:'Tratamiento facial diseñado específicamente para tu tipo de piel. Resultados visibles desde la primera sesión.'
+  },
+  {
+    id:'skincare_preso',
+    name:'Skin Care & Presoterapia',
+    badge:'⭐ Más solicitado',
+    icon:'💆',
+    dur:60,
+    prepBefore:0, prepAfter:0,
+    desc:'La combinación perfecta: tratamiento facial personalizado junto con una completa sesión de presoterapia para potenciar los resultados.'
+  },
+  {
+    id:'spa_facial',
+    name:'Ritual Spa Facial',
+    badge:'👑 Experiencia premium',
+    icon:'🌸',
+    dur:60,
+    prepBefore:30, prepAfter:30,
+    desc:'Una experiencia de bienestar completa. 60 min de tratamiento facial exclusivo con 30 min de preparación y cierre. Reservamos 2 horas para que disfrutes sin prisas.'
+  },
+];
+
+var SERVICES_MC=[
+  {
+    id:'consulta_preso',
+    name:'Consulta Nutricional & Presoterapia',
+    badge:'🎁 Primera sesión gratuita',
+    icon:'✨',
+    dur:30,
+    prepBefore:0, prepAfter:0,
+    desc:'Evaluación nutricional personalizada combinada con presoterapia. Sin compromiso y sin coste.'
+  },
+  {
+    id:'presoterapia',
+    name:'Presoterapia',
+    badge:'',
+    icon:'💆',
+    dur:30,
+    prepBefore:0, prepAfter:0,
+    desc:'Sesión completa de presoterapia para mejorar la circulación, reducir la retención de líquidos y tonificar.'
+  },
+  {
+    id:'nutricion',
+    name:'Evaluación Nutricional',
+    badge:'',
+    icon:'🌱',
+    dur:30,
+    prepBefore:0, prepAfter:0,
+    desc:'Estudio nutricional personalizado con plan de alimentación adaptado a tus objetivos y estilo de vida.'
+  },
+];
+
+/* Active services list — set when center is picked */
+var SERVICES=SERVICES_CC.slice();
+
+/* ─── SCHEDULE ─── */
+var MORNING=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30'];
+var AFTERNOON=['16:00','16:30','17:00','17:30','18:00','18:30'];
+
+/* ─── STATE ─── */
+var step=0;
+var selectedCenter=null;
+var selectedService=null;
+var selectedDate=null;
+var selectedTime=null;
+var calYear=new Date().getFullYear();
+var calMonth=new Date().getMonth();
+var takenSlots={};
+var ownerPhone='';
+var fbDB=null;
+var cfgLoaded=false;
+
+/* ─── INIT ─── */
+window.addEventListener('load',function(){
+  try{
+    var app=firebase.initializeApp(FB);
+    fbDB=firebase.database(app);
+  }catch(e){fbDB=null;}
+  showStep(0);
+});
+
+/* ─── THEME HELPER ─── */
+function applyAccent(center){
+  var c=CENTERS[center];
+  document.documentElement.style.setProperty('--accent',c.color);
+  document.documentElement.style.setProperty('--accent-dark',center==='cc'?'#1BA370':'#8A6010');
+  document.documentElement.style.setProperty('--accent-light','rgba('+c.colorRgb+',.1)');
+  document.documentElement.style.setProperty('--accent-glow','rgba('+c.colorRgb+',.18)');
+  // Header logo
+  var logo=document.getElementById('hdrLogo');
+  if(logo){logo.textContent=c.emoji;logo.style.background='rgba('+c.colorRgb+',.1)';logo.style.borderColor='rgba('+c.colorRgb+',.2)';}
+}
+
+/* ─── STEPS ─── */
+function showStep(n){
+  step=n;
+  updateSteps(n);
+  var main=document.getElementById('bkMain');
+  main.innerHTML='';
+  if(n===0)renderCenterPick(main);
+  else if(n===1)renderServicePick(main);
+  else if(n===2)renderDateTimePick(main);
+  else if(n===3)renderForm(main);
+}
+
+function updateSteps(active){
+  for(var i=0;i<4;i++){
+    var si=document.getElementById('si'+i);
+    var sn=document.getElementById('sn'+i);
+    var sb=document.getElementById('sb'+i);
+    if(!si)continue;
+    si.className='step-item'+(i<active?' done':i===active?' active':'');
+    sn.textContent=i<active?'✓':(i+1);
+    if(sb)sb.className='step-bar'+(i<active?' done':'');
+  }
+}
+
+/* ═══════════════════════════════════════
+   STEP 0 — ELEGIR CENTRO
+═══════════════════════════════════════ */
+function renderCenterPick(container){
+  var d=div('bk-body fade-up');
+  d.innerHTML='<div class="sec-title">¿Dónde quieres venir?</div>'
+    +'<div class="sec-sub">Selecciona el centro al que deseas acudir</div>'
+    +centerCard('cc')
+    +centerCard('mc');
+  container.appendChild(d);
+}
+
+function centerCard(id){
+  var c=CENTERS[id];
+  return'<div class="center-card '+id+'" onclick="pickCenter(\''+id+'\')">'
+    +'<div class="cc-logo-wrap"><span style="font-size:28px">'+c.emoji+'</span></div>'
+    +'<div style="flex:1;min-width:0">'
+    +'<div class="center-name">'+esc(c.name)+'</div>'
+    +'<div class="center-addr" style="margin-top:3px">📍 '+esc(c.address)+'<br>'+esc(c.city)+'</div>'
+    +'</div>'
+    +'<div class="center-arrow">→</div>'
+    +'</div>';
+}
+
+// M&C schedule (loaded from Firebase config)
+var MC_SCHEDULE={days:[1,2,3,4,5],morningStart:'09:00',morningEnd:'14:00',afternoonStart:'16:00',afternoonEnd:'19:00',afternoonEnabled:false};
+
+function timeToMins(t){var p=(t||'00:00').split(':');return parseInt(p[0])*60+parseInt(p[1]);}
+function minsToTime(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');}
+
+function generateSlots(startTime,endTime){
+  var slots=[];
+  var s=timeToMins(startTime),e=timeToMins(endTime);
+  for(var m=s;m<e;m+=30)slots.push(minsToTime(m));
+  return slots;
+}
+
+function getSlotsForDow(dow){
+  if(selectedCenter==='mc'){
+    // Check if this day is in M&C working days
+    if(MC_SCHEDULE.days.indexOf(dow)<0)return[];
+    var slots=generateSlots(MC_SCHEDULE.morningStart,MC_SCHEDULE.morningEnd);
+    if(MC_SCHEDULE.afternoonEnabled){
+      slots=slots.concat(generateSlots(MC_SCHEDULE.afternoonStart,MC_SCHEDULE.afternoonEnd));
+    }
+    return slots;
+  }
+  // Centro Cuídate: full schedule (Sat morning only, Sun closed)
+  if(dow===0)return[]; // Sunday closed
+  if(dow===6)return MORNING; // Saturday morning only
+  return MORNING.concat(AFTERNOON);
+}
+
+function pickCenter(id){
+  selectedCenter=id;
+  SERVICES=(id==='mc'?SERVICES_MC:SERVICES_CC).slice();
+  applyAccent(id);
+  if(fbDB){
+    var path='centrocuidate/booking/'+id;
+    fbDB.ref(path+'/config').once('value').then(function(snap){
+      var cfg=snap.val()||{};
+      ownerPhone=(cfg.ownerPhone||'').replace(/[\s\-\+]/g,'');
+      if(cfg.services)SERVICES.forEach(function(s){if(cfg.services[s.id]&&cfg.services[s.id].dur)s.dur=cfg.services[s.id].dur;});
+      // Load M&C schedule if set
+      if(id==='mc'&&cfg.mcSchedule){
+        var ms=cfg.mcSchedule;
+        MC_SCHEDULE.days=ms.days||[1,2,3,4,5];
+        MC_SCHEDULE.morningStart=ms.morningStart||'09:00';
+        MC_SCHEDULE.morningEnd=ms.morningEnd||'14:00';
+        MC_SCHEDULE.afternoonEnabled=ms.afternoonEnabled||false;
+        MC_SCHEDULE.afternoonStart=ms.afternoonStart||'16:00';
+        MC_SCHEDULE.afternoonEnd=ms.afternoonEnd||'19:00';
+      }
+      return fbDB.ref(path+'/takenSlots').once('value');
+    }).then(function(snap){
+      takenSlots=snap.val()||{};
+      fbDB.ref(path+'/takenSlots').on('value',function(s){takenSlots=s.val()||{};});
+      showStep(1);
+    }).catch(function(){showStep(1);});
+  }else{showStep(1);}
+}
+
+/* ═══════════════════════════════════════
+   STEP 1 — ELEGIR SERVICIO
+═══════════════════════════════════════ */
+function renderServicePick(container){
+  var d=div('bk-body fade-up');
+  var c=CENTERS[selectedCenter];
+  d.innerHTML='<div class="sec-title">¿Qué servicio necesitas?</div>'
+    +'<div class="sec-sub">Todos los precios incluyen consulta inicial y seguimiento personalizado</div>'
+    +'<div id="svcList"></div>';
+  container.appendChild(d);
+  var list=document.getElementById('svcList');
+  SERVICES.forEach(function(s){
+    var card=document.createElement('div');
+    card.className='svc-card'+(selectedService&&selectedService.id===s.id?' selected':'')+(s.badge?' popular':'');
+    var totalMins=(s.prepBefore||0)+s.dur+(s.prepAfter||0);
+    var hasBuf=!!(s.prepBefore||s.prepAfter);
+    var durLine=hasBuf
+      ? fmtDur(s.dur)+' de tratamiento · '+fmtDur(totalMins)+' reservados'
+      : fmtDur(s.dur);
+    // Price display
+    var priceHtml='';
+    if(s.price===0||s.free){
+      priceHtml='<div class="svc-price free">Gratuita</div>';
+    }else if(s.price){
+      priceHtml='<div class="svc-price">'+s.price+'€</div>';
+    }
+    card.innerHTML='<div class="svc-icon">'+s.icon+'</div>'
+      +'<div class="svc-info">'
+      +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">'
+      +'<div class="svc-name">'+esc(s.name)+'</div>'
+      +(s.badge?'<span class="svc-tag">'+esc(s.badge)+'</span>':'')
+      +'</div>'
+      +'<div class="svc-dur">⏱ '+durLine+'</div>'
+      +(s.desc?'<div style="font-size:11px;color:var(--text3);font-weight:500;margin-top:4px;line-height:1.55">'+esc(s.desc)+'</div>':'')
+      +'</div>'
+      +priceHtml
+      +'<div class="svc-check">'+(selectedService&&selectedService.id===s.id?'✓':'')+'</div>';
+    card.addEventListener('click',function(){selectedService=s;showStep(2);});
+    list.appendChild(card);
+  });
+  // Trust row
+  var trust=document.createElement('div');
+  trust.className='trust-row';
+  trust.innerHTML='<div class="trust-item">🔒 Reserva segura</div>'
+    +'<div class="trust-item">⚡ Confirmación inmediata</div>'
+    +'<div class="trust-item">💚 Sin tarjeta</div>';
+  d.appendChild(trust);
+  var back=document.createElement('button');
+  back.className='bk-btn-ghost';back.textContent='← Cambiar centro';
+  back.addEventListener('click',function(){showStep(0);});
+  d.appendChild(back);
+}
+
+/* ═══════════════════════════════════════
+   STEP 2 — ELEGIR FECHA Y HORA
+═══════════════════════════════════════ */
+function renderDateTimePick(container){
+  var d=div('bk-body fade-up');
+  d.innerHTML='<div class="sec-title">Elige día y hora</div>'
+    +'<div class="sec-sub">Solo se muestran los días con huecos disponibles</div>'
+    +'<div class="cal-card" id="calArea"></div>'
+    +'<div id="slotsArea" class="slots-wrap"></div>'
+    +'<div id="dtNextWrap" style="margin-top:6px"></div>';
+  container.appendChild(d);
+  renderCalendar(document.getElementById('calArea'));
+}
+
+function renderCalendar(wrap){
+  var today=new Date();today.setHours(0,0,0,0);
+  var months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  wrap.innerHTML='';
+  // Nav
+  var nav=div('cal-nav');
+  nav.innerHTML='<button class="cal-btn" id="calPrev">‹</button>'
+    +'<span class="cal-month-lbl">'+months[calMonth]+' '+calYear+'</span>'
+    +'<button class="cal-btn" id="calNext">›</button>';
+  wrap.appendChild(nav);
+  nav.querySelector('#calPrev').addEventListener('click',function(){
+    calMonth--;if(calMonth<0){calMonth=11;calYear--;}
+    renderCalendar(wrap);clearSlots();selectedDate=null;selectedTime=null;
+  });
+  nav.querySelector('#calNext').addEventListener('click',function(){
+    calMonth++;if(calMonth>11){calMonth=0;calYear++;}
+    renderCalendar(wrap);clearSlots();selectedDate=null;selectedTime=null;
+  });
+  // Grid
+  var grid=div('cal-grid');
+  ['L','M','X','J','V','S','D'].forEach(function(d){var el=document.createElement('div');el.className='cal-dow';el.textContent=d;grid.appendChild(el);});
+  var first=new Date(calYear,calMonth,1);
+  var startDow=first.getDay();startDow=startDow===0?6:startDow-1;
+  for(var i=0;i<startDow;i++){var e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
+  var daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  for(var dd=1;dd<=daysInMonth;dd++){
+    var date=new Date(calYear,calMonth,dd);date.setHours(0,0,0,0);
+    var ds=toISO(date);
+    var dow=date.getDay();
+    var isToday=date.getTime()===today.getTime();
+    var isPast=date<today;
+    var isSunday=dow===0;
+    var dayEl=document.createElement('div');
+    dayEl.textContent=dd;
+    if(isPast){dayEl.className='cal-day past';}
+    else if(isSunday){dayEl.className='cal-day closed';}
+    else{
+      var hasFree=hasFreeSlotsOnDay(ds,dow);
+      if(!hasFree){dayEl.className='cal-day closed';}
+      else{
+        var cls='cal-day avail'+(isToday?' today-ring':'')+(selectedDate===ds?' sel':'');
+        dayEl.className=cls;
+        if(selectedDate!==ds){var dot=document.createElement('div');dot.className='avail-dot';dayEl.appendChild(dot);}
+        ;(function(dateStr,el,dowInner){
+          el.addEventListener('click',function(){
+            selectedDate=dateStr;selectedTime=null;
+            wrap.querySelectorAll('.cal-day.sel').forEach(function(x){x.className=x.className.replace(' sel','');x.className=x.className.replace('sel','')+'avail';});
+            el.className='cal-day sel';
+            renderSlots(document.getElementById('slotsArea'),dateStr,dowInner);
+          });
+        })(ds,dayEl,dow);
+      }
+    }
+    grid.appendChild(dayEl);
+  }
+  wrap.appendChild(grid);
+  if(selectedDate){
+    var selDow=new Date(selectedDate+'T00:00:00').getDay();
+    renderSlots(document.getElementById('slotsArea'),selectedDate,selDow);
+  }
+}
+
+function clearSlots(){
+  var sa=document.getElementById('slotsArea');if(sa)sa.innerHTML='';
+  var nw=document.getElementById('dtNextWrap');if(nw)nw.innerHTML='';
+}
+
+// getSlotsForDow moved to pickCenter section above
+
+function getTotalBlocks(svc){
+  // Total calendar blocks = prepBefore + dur + prepAfter (in 30-min units)
+  var s=svc||selectedService||{dur:30,prepBefore:0,prepAfter:0};
+  return Math.ceil(((s.prepBefore||0)+(s.dur||30)+(s.prepAfter||0))/30);
+}
+
+function isSlotTaken(dateStr,time,svc){
+  // For Spa Facial (or any service with prepBefore):
+  // the displayed start time is the actual appointment start,
+  // but we must also check that the prepBefore window is free.
+  var s=svc||selectedService||{dur:30,prepBefore:0,prepAfter:0};
+  var prepBefore=s.prepBefore||0;
+  var totalMins=(s.prepBefore||0)+(s.dur||30)+(s.prepAfter||0);
+  var totalBlocks=Math.ceil(totalMins/30);
+  // Check from (time - prepBefore) for totalBlocks
+  var startCheckTime=addMins(time,-prepBefore);
+  for(var b=0;b<totalBlocks;b++){
+    var t=addMins(startCheckTime,b*30);
+    if(takenSlots[dateStr+'_'+t])return true;
+  }
+  return false;
+}
+
+function hasFreeSlotsOnDay(dateStr,dow){
+  var slots=getSlotsForDow(dow);
+  for(var i=0;i<slots.length;i++){if(!isSlotTaken(dateStr,slots[i]))return true;}
+  return false;
+}
+
+function renderSlots(wrap,dateStr,dow){
+  wrap.innerHTML='';
+  var allSlots=getSlotsForDow(dow);
+  if(!allSlots.length){wrap.innerHTML='<div class="no-slots">📅 No trabajamos este día en este centro. Prueba otro día.</div>';return;}
+
+  // Split into morning/afternoon based on time (before/after 14:00)
+  var morning=allSlots.filter(function(t){return timeToMins(t)<14*60;});
+  var afternoon=allSlots.filter(function(t){return timeToMins(t)>=14*60;});
+  var hasAnyFree=allSlots.some(function(t){return!isSlotTaken(dateStr,t);});
+  if(!hasAnyFree){wrap.innerHTML='<div class="no-slots">😔 Sin huecos disponibles este día.<br>Prueba con otra fecha.</div>';return;}
+
+  // Date pill
+  var months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var dObj=new Date(dateStr+'T00:00:00');
+  var days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var datePill=div('');
+  datePill.innerHTML='<div class="date-pill">📅 '+days[dObj.getDay()]+', '+dObj.getDate()+' de '+months[dObj.getMonth()]+'</div>';
+  wrap.appendChild(datePill);
+
+  // Service prep info
+  var svc=selectedService||{prepBefore:0,prepAfter:0,dur:30};
+  if(svc.prepBefore||svc.prepAfter){
+    var totalMins=(svc.prepBefore||0)+svc.dur+(svc.prepAfter||0);
+    var note=div('');
+    note.innerHTML='<div style="background:rgba(46,204,142,.07);border:1px solid rgba(46,204,142,.15);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;font-size:12px;font-weight:600;color:rgba(46,204,142,.85);line-height:1.65">'
+      +'<div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px">'+svc.icon+' '+esc(svc.name)+'</div>'
+      +'La hora elegida es cuando <strong>empieza tu tratamiento</strong>. Reservamos '
+      +'<strong>'+fmtDur(totalMins)+'</strong> en total para preparación y cierre.</div>';
+    wrap.appendChild(note);
+  }
+
+  function renderPeriod(slots,label,emoji){
+    if(!slots.length)return;
+    var sec=div('slots-section');
+    sec.innerHTML='<div class="slots-period-lbl">'+emoji+' '+label+'</div>';
+    var sg=div('slots-grid');
+    slots.forEach(function(t){
+      var btn=document.createElement('button');
+      var taken=isSlotTaken(dateStr,t);
+      btn.className='slot-btn'+(taken?' taken':selectedTime===t?' sel':'');
+      btn.textContent=t;
+      if(!taken){
+        btn.addEventListener('click',function(){
+          selectedTime=t;
+          document.querySelectorAll('.slot-btn.sel').forEach(function(b){b.classList.remove('sel');});
+          btn.classList.add('sel');
+          renderNextBtn();
+          // Scroll to next button
+          setTimeout(function(){var nw=document.getElementById('dtNextWrap');if(nw)nw.scrollIntoView({behavior:'smooth',block:'center'});},200);
+        });
+      }else{btn.disabled=true;}
+      sg.appendChild(btn);
+    });
+    sec.appendChild(sg);
+    wrap.appendChild(sec);
+  }
+
+  renderPeriod(morning,'Mañana','🌅');
+  renderPeriod(afternoon,'Tarde','🌆');
+
+  function renderNextBtn(){
+    var nw=document.getElementById('dtNextWrap');
+    nw.innerHTML='';
+    var selInfo=div('');
+    selInfo.innerHTML='<div style="text-align:center;margin-bottom:14px;font-size:14px;font-weight:700;color:var(--text2)">Has elegido las <strong style="color:var(--accent);font-size:18px">'+selectedTime+'</strong></div>';
+    nw.appendChild(selInfo);
+    var btn=document.createElement('button');
+    btn.className='bk-btn';btn.innerHTML='Confirmar hora y continuar &rarr;';
+    btn.addEventListener('click',function(){showStep(3);});
+    nw.appendChild(btn);
+    var back=document.createElement('button');
+    back.className='bk-btn-ghost';back.textContent='← Cambiar servicio';
+    back.addEventListener('click',function(){showStep(1);});
+    nw.appendChild(back);
+  }
+  if(selectedTime)renderNextBtn();
+}
+
+/* ═══════════════════════════════════════
+   STEP 3 — FORMULARIO
+═══════════════════════════════════════ */
+function renderForm(container){
+  var c=CENTERS[selectedCenter];
+  var dateObj=new Date(selectedDate+'T00:00:00');
+  var days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var mths=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var dateLabel=days[dateObj.getDay()]+', '+dateObj.getDate()+' de '+mths[dateObj.getMonth()];
+  var svc=selectedService;
+  var hasBuf=!!(svc.prepBefore||svc.prepAfter);
+  var totalMins=(svc.prepBefore||0)+svc.dur+(svc.prepAfter||0);
+  var endTime=addMins(selectedTime,svc.dur);
+  var blockStart=hasBuf?addMins(selectedTime,-(svc.prepBefore||0)):selectedTime;
+  var blockEnd=hasBuf?addMins(selectedTime,svc.dur+(svc.prepAfter||0)):endTime;
+  var d=div('bk-body fade-up');
+  var totalMins=(selectedService.prepBefore||0)+selectedService.dur+(selectedService.prepAfter||0);
+  var hasBuf=!!(selectedService.prepBefore||selectedService.prepAfter);
+  var durSummary=hasBuf
+    ? fmtDur(selectedService.dur)+' de tratamiento'
+    : fmtDur(selectedService.dur);
+  d.innerHTML='<div class="sec-title">Tus datos</div>'
+    +'<div class="sec-sub">Solo para confirmar tu cita</div>'
+    +'<div class="summary-box">'
+    +'<div class="summary-header">'
+    +'<div class="summary-sede-name">'+c.emoji+' '+esc(c.name)+'</div>'
+    +'<div class="summary-sede-addr">📍 '+esc(c.address)+', '+esc(c.city)+'</div>'
+    +'</div>'
+    +'<div class="summary-rows">'
+    +'<div class="sum-row"><span class="sum-lbl">Servicio</span><span class="sum-val">'+esc(selectedService.name)+'</span></div>'
+    +'<div class="sum-row"><span class="sum-lbl">Fecha</span><span class="sum-val">'+esc(dateLabel)+'</span></div>'
+    +'<div class="sum-row"><span class="sum-lbl">Tu cita empieza</span><span class="sum-val" style="font-size:17px;font-weight:900;color:var(--accent)">'+esc(selectedTime)+'</span></div>'
+    +'<div class="sum-row"><span class="sum-lbl">Duración</span><span class="sum-val">'+esc(durSummary)+'</span></div>'
+    +(hasBuf
+      ?'<div class="sum-row" style="background:rgba(46,204,142,.05);border-radius:0 0 var(--r-lg) var(--r-lg)">'
+        +'<span class="sum-lbl" style="color:var(--accent)">🕐 Bloque reservado</span>'
+        +'<span class="sum-val" style="font-size:12px;color:var(--text2)">'
+        +esc(blockStart)+' → '+esc(blockEnd)
+        +' <span style="font-size:10px;color:var(--text3);font-weight:500">('+fmtDur(totalMins)+' total)</span>'
+        +'</span></div>'
+      :'')
+    +'</div></div>'
+    +(hasBuf
+      ?'<div style="background:rgba(46,204,142,.07);border:1px solid rgba(46,204,142,.18);border-radius:var(--r);padding:11px 14px;margin-bottom:16px;font-size:12px;color:rgba(46,204,142,.85);line-height:1.65;font-weight:600">'
+        +'ℹ️ Tu Ritual Spa Facial empieza a las <strong>'+esc(selectedTime)+'</strong> y termina a las <strong>'+esc(endTime)+'</strong>. '
+        +'Llegaremos preparados desde las <strong>'+esc(blockStart)+'</strong> para que todo esté listo cuando llegues.'
+        +'</div>'
+      :'')
+    +'<div class="bk-field"><label class="bk-lbl">Tu nombre</label><input id="bkName" class="bk-inp" type="text" placeholder="María García" autocomplete="given-name"></div>'
+    +'<div class="bk-field"><label class="bk-lbl">Tu teléfono</label><input id="bkPhone" class="bk-inp" type="tel" inputmode="tel" placeholder="600 000 000" autocomplete="tel"></div>'
+    +'<div class="bk-field"><label class="bk-lbl">Nota (opcional)</label><textarea id="bkNote" class="bk-inp" rows="2" placeholder="Alguna indicación especial…" style="resize:none;min-height:70px"></textarea></div>'
+    +'<div class="bk-error" id="bkErr"></div>'
+    +'<button class="bk-btn" id="submitBtn" onclick="submitRequest()">📲 Solicitar cita</button>'
+    +'<button class="bk-btn-ghost" onclick="showStep(2)">← Cambiar fecha u hora</button>'
+    +'<div class="bk-notice">Tu solicitud llegará al centro. Te confirmarán la cita por WhatsApp lo antes posible.</div>';
+  container.appendChild(d);
+}
+
+/* ═══════════════════════════════════════
+   SUBMIT
+═══════════════════════════════════════ */
+function submitRequest(){
+  var name=((document.getElementById('bkName')||{}).value||'').trim();
+  var phone=((document.getElementById('bkPhone')||{}).value||'').replace(/[\s\-\+]/g,'');
+  var note=((document.getElementById('bkNote')||{}).value||'').trim();
+  if(!name){showErr('Por favor escribe tu nombre');return;}
+  if(!phone||phone.length<9){showErr('Introduce tu teléfono (mínimo 9 dígitos)');return;}
+  var btn=document.getElementById('submitBtn');
+  if(btn){btn.disabled=true;btn.textContent='Enviando…';}
+  var reqId='req_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  var req={
+    id:reqId,
+    center:selectedCenter,
+    centerName:CENTERS[selectedCenter].name,
+    service:selectedService.name,
+    serviceId:selectedService.id,
+    date:selectedDate,
+    time:selectedTime,
+    dur:selectedService.dur,
+    prepBefore:selectedService.prepBefore||0,
+    prepAfter:selectedService.prepAfter||0,
+    totalMins:(selectedService.prepBefore||0)+selectedService.dur+(selectedService.prepAfter||0),
+    clientName:name,
+    clientPhone:phone,
+    note:note,
+    status:'pending',
+    createdAt:new Date().toISOString()
+  };
+  // Try Firebase — but always show success and send WA regardless
+  function onDone(){
+    showSuccess(req,name);
+    if(ownerPhone)setTimeout(function(){notifyOwnerWA(req);},900);
+  }
+  if(fbDB){
+    fbDB.ref('centrocuidate/booking/'+selectedCenter+'/requests/'+reqId).set(req)
+      .then(onDone)
+      .catch(function(e){
+        console.warn('Firebase write failed:',e.message,'— proceeding with WA only');
+        // Still show success and send WA even if Firebase fails
+        // (Firebase rules may not be updated yet)
+        onDone();
+      });
+  }else{
+    onDone();
+  }
+}
+
+function notifyOwnerWA(req){
+  var c=CENTERS[req.center];
+  var hasBuf=!!(req.prepBefore||req.prepAfter);
+  var endTime=addMins(req.time, req.dur||30);
+  var blockStart=req.prepBefore?addMins(req.time,-(req.prepBefore)):req.time;
+  var blockEnd=addMins(req.time,(req.dur||30)+(req.prepAfter||0));
+  var msg='🆕 *NUEVA SOLICITUD DE CITA*\n\n'
+    +'👤 *Cliente:* '+req.clientName+'\n'
+    +'📱 *Teléfono:* '+req.clientPhone+'\n'
+    +'🏢 *Centro:* '+c.name+'\n'
+    +'✨ *Servicio:* '+req.service+'\n'
+    +'📅 *Fecha:* '+fmtDate(req.date)+'\n'
+    +'🕐 *Hora de cita:* '+req.time+(hasBuf?' → '+endTime:' → '+endTime)+'\n'
+    +(hasBuf?'⏱️ *Bloqueo total:* '+blockStart+' → '+blockEnd+' ('+fmtDur(req.totalMins||req.dur)+')\n':'')
+    +(req.note?'📝 *Nota:* '+req.note+'\n':'')
+    +'\n_Solicitud online · MDC Leiva_';
+  var num=ownerPhone.startsWith('34')?ownerPhone:'34'+ownerPhone;
+  var url=(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)?'whatsapp://send?phone=':'https://wa.me/')+num+'&text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+}
+
+/* ═══════════════════════════════════════
+   SUCCESS SCREEN
+═══════════════════════════════════════ */
+function showSuccess(req,name){
+  document.getElementById('stepsWrap').style.display='none';
+  var c=CENTERS[req.center];
+  var main=document.getElementById('bkMain');
+  main.innerHTML='';
+  var d=div('bk-body');
+  d.innerHTML='<div class="success-wrap">'
+    +'<div class="success-ring">✓</div>'
+    +'<div class="success-title">¡Solicitud enviada!</div>'
+    +'<div class="success-sub">Gracias, <strong>'+esc(name)+'</strong>. El centro te confirmará la cita por WhatsApp en breve. <br><br><em>Hasta que recibas confirmación, la reserva no está garantizada.</em></div>'
+    // Address card
+    +'<div class="addr-card">'
+    +'<div class="addr-sede-name">'+c.emoji+' '+esc(c.name)+'</div>'
+    +'<div class="addr-line"><span class="addr-icon">📍</span><span>'+esc(c.address)+'<br>'+esc(c.city)+'</span></div>'
+    +'<div class="addr-line"><span class="addr-icon">📅</span><span>'+esc(fmtDate(req.date))+' a las <strong>'+esc(req.time)+'</strong></span></div>'
+    +'<div class="addr-line"><span class="addr-icon">✨</span><span>'+esc(req.service)+'</span></div>'
+    +'</div>'
+    // Google Maps button
+    +'<a class="bk-btn-map" href="'+c.mapsUrl+'" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>'
+    +'<button class="bk-btn" style="margin-top:10px;max-width:340px" onclick="startOver()">Hacer otra reserva</button>'
+    +'</div>';
+  main.appendChild(d);
+}
+
+function startOver(){
+  selectedCenter=null;selectedService=null;selectedDate=null;selectedTime=null;takenSlots={};
+  document.documentElement.style.setProperty('--accent','#2ECC8E');
+  document.documentElement.style.setProperty('--accent-dark','#1BA370');
+  document.documentElement.style.setProperty('--accent-light','rgba(46,204,142,.1)');
+  document.documentElement.style.setProperty('--accent-glow','rgba(46,204,142,.18)');
+  var logo=document.getElementById('hdrLogo');if(logo){logo.textContent='✦';logo.style.background='rgba(46,204,142,.08)';logo.style.borderColor='rgba(46,204,142,.15)';}
+  document.getElementById('stepsWrap').style.display='flex';
+  showStep(0);
+}
+
+/* ─── UTILS ─── */
+function showErr(msg){var el=document.getElementById('bkErr');if(!el)return;el.textContent='⚠️ '+msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},5000);}
+function div(cls){var el=document.createElement('div');el.className=cls;return el;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmtDate(s){var d=new Date(s+'T00:00:00');var days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];var mths=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];return days[d.getDay()]+', '+d.getDate()+' de '+mths[d.getMonth()];}
+function fmtDur(m){return m<60?m+' min':Math.floor(m/60)+'h'+(m%60?m%60+'min':'');}
+function addMins(t,m){var p=t.split(':');var tot=parseInt(p[0])*60+parseInt(p[1])+m;var h=Math.floor(tot/60)%24,mn=tot%60;return String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');}
+</script>
+</body>
+</html>
